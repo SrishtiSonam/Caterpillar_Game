@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    color: black;
+    font-weight: 600;
+    font-family: 'Gill Sans';
+}
+body{
+    display:flex;
+    align-items: center;
+    /* justify-content: center; */
+    min-height: 100vh;
+    /* background-image: radial-gradient(ellipse, #7d8afeb0, #7dfed5); */
+    /* background-image: radial-gradient(closest-side, #7d8afeb0, #7dfed5); */
+    background-image: radial-gradient(farthest-corner at 70% 60%, #7de2fe4b, #7dfed59e);
+}
+.instructions{
+    padding: 1rem;
+    margin-left:10% ;
+    background-image: radial-gradient(ellipse, #f87dfe8c, #fe7da62f);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    align-items: center;
+    width: 40vmin;
+    height: 60vmin;
+}
+.instruction_disc{
+    display:flex;
+}
+.arrow_key{
+    width:8rem;
+    height:5rem;
+}
+.growing_snake{
+    height:6rem;
+    width:6rem;
+}
+.wrapper {
+    margin-left:20%;
+    width:65vmin;
+    height:70vmin;
+    display:flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-image: repeating-linear-gradient(135deg, #ecfdad, #f5fddc 160px); 
+    border-radius: 5px;
+}
+.game_details{
+    color:#B8C6DC;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 20px 27px;
+    display:flex;
+    justify-content:space-between ;
+}
+.play_board {
+    width:100%;
+    height:100%;
+    display: grid;
+    grid-template: repeat(30, 1fr) / repeat(30, 1fr);
+    background-image: repeating-linear-gradient(45deg, #e8f9e4, #eeffea 80px);
+    border: 0.5rem dashed rgba(125, 84, 2, 0.65);
+}
+.score_card{
+    display:flex;
+    justify-content:space-evenly;
+    align-items: center;
+    width: 50px;
+}
+.food_score {
+    background-image: radial-gradient(circle, #fe7d7d, #ff0000); 
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+.play_board .food{
+    background-image: radial-gradient(circle, #fe7d7d, #ff0000); 
+    border-radius: 50%;
+}
+.play_board .head{
+    height: 0.8rem;
+    width: 0.8rem;
+    background-image: radial-gradient(circle, #2fff00, #145f01); 
+    border-radius: 50%;
+}
+.body{
+    background-image: radial-gradient(circle, #2fff00, #145f01); 
+    border-radius: 20%;
+}
+.eye {
+    background-image: radial-gradient(circle, #eeff00,#145f01); 
+    /* # #595f01 */
+    border-radius: 50%; 
+    position: relative;
+}
+
+.eye:before, .eye:after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #542d00; 
+    border-radius: 100%;
+}
+
+.eye:before {
+    top: 20%;
+    left: 40%;
+}
+
+.eye:after {
+    top: 20%;
+    right: 40%;
+}
