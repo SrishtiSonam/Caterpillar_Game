@@ -10,7 +10,7 @@
 body{
     display:flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     min-height: 100vh;
     /* background-image: radial-gradient(ellipse, #7d8afeb0, #7dfed5); */
     /* background-image: radial-gradient(closest-side, #7d8afeb0, #7dfed5); */
@@ -39,9 +39,8 @@ body{
     width:6rem;
 }
 .wrapper {
-    margin-left:20%;
-    width:65vmin;
-    height:70vmin;
+    width:70vmin;
+    height:75vmin;
     display:flex;
     flex-direction: column;
     overflow: hidden;
@@ -56,6 +55,15 @@ body{
     display:flex;
     justify-content:space-between ;
 }
+
+.pseudo-element {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+}
 .play_board {
     width:100%;
     height:100%;
@@ -63,7 +71,26 @@ body{
     grid-template: repeat(30, 1fr) / repeat(30, 1fr);
     background-image: repeating-linear-gradient(45deg, #e8f9e4, #eeffea 80px);
     border: 0.5rem dashed rgba(125, 84, 2, 0.65);
-}
+    grid-auto-flow: dense;
+    background-clip: content-box; /* Keep background within grid cells */
+    position: relative;
+  }
+  
+  
+
+  /* .play_board::before { */
+    /* content: ""; */
+    /* grid-row: 10 / span 1; Starting from row 8, span 1 row */
+    /* grid-column: 9 / span 14; Starting from column 2, span 1 column */
+    /* background-color: red; */
+  /* } */
+  /* .play_board::before { */
+    /* content: ""; */
+    /* grid-row: 20 / span 1; Starting from row 8, span 1 row */
+    /* grid-column: 9 / span 14; Starting from column 2, span 1 column */
+    /* background-color: red; */
+  /* } */
+  
 .score_card{
     display:flex;
     justify-content:space-evenly;

@@ -16,8 +16,8 @@ highScorePoint.innerText = `High Score : ${highScore}`;
 
 
 const changeFoodPosition = () => {
-    foodX = Math.floor(Math.random() * 3) + 10;
-    foodY = Math.floor(Math.random() * 3) + 10;
+    foodX = Math.floor(Math.random() * 30) + 1;
+    foodY = Math.floor(Math.random() * 30) + 1;
 }
 
 const handleGameOver = () => {
