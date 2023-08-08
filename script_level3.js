@@ -3,10 +3,9 @@ const scorePoint = document.querySelector(".score");
 
 const highScorePoint = document.querySelector(".high_score");
 
-
+let i=0,j=0;
 let gameOver = false;
 let foodX, foodY;
-let i=0,j=0;
 let caterpillarX=5, caterpillarY=10;
 let caterpillarBody = [];
 let velocityX=0, velocityY=0;
@@ -15,34 +14,15 @@ let score = 0;
 let highScore = localStorage.getItem("high_score") || 0;
 highScorePoint.innerText = `High Score : ${highScore}`;
 
-let excludedValuesFoodX = [1,30];
-let excludedValuesFoodY = [1,30];
-
-const generateRandomValueFoodY = (valueX, caterpillarBody) => {
-    let valueY;
-    if (excludedValuesFoodX.includes(valueX)) {
-        do {
-            valueY = Math.floor(Math.random() * 30) + 1;
-        } while (excludedValuesFoodY.includes(valueY) || isCaterpillarBodyOverlap(valueX, valueY, caterpillarBody));
-    } else {
-        valueY = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-    }
-    return valueY;
-}
-
-const isCaterpillarBodyOverlap = (valueX, valueY, caterpillarBody) => {
-    for (let i = 0; i < caterpillarBody.length; i++) {
-        const [x, y] = caterpillarBody[i];
-        if (valueX === x && valueY === y) {
-            return true;
-        }
-    }
-    return false;
-}
+var excludedValuesFoodX = [1,12,18,30];
+var excludedValuesFoodY = [1,9,10,11,12,13,14,15,16,17,18,19,20,21,22,30];
 
 const changeFoodPosition = () => {
-    foodX = Math.floor(Math.random() * 30) + 1;
-    foodY = generateRandomValueFoodY(foodX, caterpillarBody);
+    foodX = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
+    foodY = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
+    if (excludedValuesFoodX.includes(foodX) && excludedValuesFoodY.includes(foodY)){
+        changeFoodPosition()
+    }
 }
 
 const handleGameOver = () => {
@@ -50,6 +30,21 @@ const handleGameOver = () => {
     alert("Game Over! Press OK to replay ...");
     location.reload();
 }
+
+const boarder = () => {
+    let htmlboarder = '';
+    for (i=1;i<31;i++) {
+        for(j=1;j<31;j++){
+            if ( (j==1) || (j==30) ){
+                htmlboarder += `<div class="boarder horizontal" style="grid-area:${j}/${i}"></div>`;
+            }else if ( ((i==1) || (i==30)) || ( (excludedValuesFoodY.includes(j)) && (excludedValuesFoodX.includes(i)) ) ) {
+                htmlboarder += `<div class="boarder vertical" style="grid-area:${j}/${i}"></div>`;
+            } 
+        }
+    }
+    return htmlboarder;
+}
+
 
 const changeDirection = (e) => {
     if (e.key === "ArrowUp" && velocityY!=1 ){
@@ -68,27 +63,13 @@ const changeDirection = (e) => {
     initGame();
 }
 
-const boarder = () => {
-    let htmlboarder = '';
-    for (i=1;i<31;i++) {
-        for(j=1;j<31;j++){
-            if ((j==1) || (j==30)) {
-                htmlboarder += `<div class="boarder horizontal" style="grid-area:${j}/${i}"></div>`;
-            }else if ((i==1) || (i==30)) {
-                htmlboarder += `<div class="boarder vertical" style="grid-area:${j}/${i}"></div>`;
-            } 
-        }
-    }
-    return htmlboarder;
-}
-
 const initGame = () => {
-    if (gameOver) return handleGameOver();
 
-    let htmlMarkup = `<div class="food" style="grid-area:${foodY}/${foodX}"></div>`;
+    if (gameOver) return handleGameOver();
 
     let htmlMarkupboarder = boarder();
 
+    let htmlMarkup = `<div class="food" style="grid-area:${foodY}/${foodX}"></div>`;
     if(caterpillarX===foodX && caterpillarY===foodY) {
         changeFoodPosition();
         caterpillarBody.push([foodX,foodY]);
@@ -102,7 +83,7 @@ const initGame = () => {
         highScorePoint.innerText = `High Score : ${highScore}`;
     }
 
-    for (let i=caterpillarBody.length - 1; i>0 ; i--){
+    for (let i=caterpillarBody.length - 1; i>0 ; i--){    //////////////////////////////////////////////////////////////////////////////
         caterpillarBody[i] = caterpillarBody[i-1];
     }
 
@@ -111,7 +92,7 @@ const initGame = () => {
     caterpillarX += velocityX;
     caterpillarY += velocityY;
 
-    if( caterpillarX<=1 || caterpillarX>29 || caterpillarY<=1 || caterpillarY>29){
+    if( caterpillarX<=0 || caterpillarX>30 || caterpillarY<=0 || caterpillarY>30){   ///////////////////////////////////////////////////
         gameOver = true;
     }
 
@@ -125,6 +106,7 @@ const initGame = () => {
     }
 
     playBoard.innerHTML = htmlMarkup + htmlMarkupboarder;
+
 }
 
 changeFoodPosition();

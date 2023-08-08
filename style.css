@@ -14,7 +14,7 @@ body{
     min-height: 100vh;
     /* background-image: radial-gradient(ellipse, #7d8afeb0, #7dfed5); */
     /* background-image: radial-gradient(closest-side, #7d8afeb0, #7dfed5); */
-    background-image: radial-gradient(farthest-corner at 70% 60%, #7de2fe4b, #7dfed59e);
+    background-image: radial-gradient(farthest-corner at 50% 50%, #7de2fe4b, #d7fff29e);
 }
 .instructions{
     padding: 1rem;
@@ -55,41 +55,17 @@ body{
     display:flex;
     justify-content:space-between ;
 }
-
-.pseudo-element {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    content: "";
-}
 .play_board {
     width:100%;
     height:100%;
     display: grid;
     grid-template: repeat(30, 1fr) / repeat(30, 1fr);
     background-image: repeating-linear-gradient(45deg, #e8f9e4, #eeffea 80px);
-    border: 0.5rem dashed rgba(125, 84, 2, 0.65);
+    /* border: 0.5rem dashed rgba(125, 84, 2, 0.65); */
     grid-auto-flow: dense;
     background-clip: content-box; /* Keep background within grid cells */
     position: relative;
   }
-  
-  
-
-  /* .play_board::before { */
-    /* content: ""; */
-    /* grid-row: 10 / span 1; Starting from row 8, span 1 row */
-    /* grid-column: 9 / span 14; Starting from column 2, span 1 column */
-    /* background-color: red; */
-  /* } */
-  /* .play_board::before { */
-    /* content: ""; */
-    /* grid-row: 20 / span 1; Starting from row 8, span 1 row */
-    /* grid-column: 9 / span 14; Starting from column 2, span 1 column */
-    /* background-color: red; */
-  /* } */
   
 .score_card{
     display:flex;
@@ -106,6 +82,17 @@ body{
 .play_board .food{
     background-image: radial-gradient(circle, #fe7d7d, #ff0000); 
     border-radius: 50%;
+    z-index: +10;
+}
+.play_board .boarder{
+    border-radius: 5%;
+}
+.play_board .vertical{
+    background-image: linear-gradient(to bottom, #ffe9bf, #ffb52c); 
+}
+.play_board .horizontal{
+    background-image: linear-gradient(to left, #ffe9bf, #ffb52c); 
+
 }
 .play_board .head{
     height: 0.8rem;

@@ -3,7 +3,7 @@ const scorePoint = document.querySelector(".score");
 
 const highScorePoint = document.querySelector(".high_score");
 
-
+let i=0,j=0;
 let gameOver = false;
 let foodX, foodY;
 let caterpillarX=5, caterpillarY=10;
@@ -15,7 +15,8 @@ let highScore = localStorage.getItem("high_score") || 0;
 highScorePoint.innerText = `High Score : ${highScore}`;
 
 var excludedValuesFoodX = [9,10,11,12,13,14,15,16,17,18,19,20,21,22];
-var excludedValuesFoodY = [10,20];
+var excludedValuesFoodY = [12,18];
+
 const generateRandomValueFoodY = (valueX) => {
     var valueY;
     if(excludedValuesFoodX.includes(valueX)){
@@ -28,53 +29,6 @@ const generateRandomValueFoodY = (valueX) => {
     return valueY;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const playBoard = document.querySelector('.play_board');
-  
-    // Create a new element to simulate the ::before pseudo-element
-    const pseudoElement = document.createElement('div');
-    pseudoElement.style.gridRow = '20 / span 1';
-    pseudoElement.style.gridColumn = '9 / span 14';
-    pseudoElement.style.backgroundColor = 'red';
-    pseudoElement.className = 'pseudo-element';
-  
-    // Append the pseudo-element to the .play_board element
-    playBoard.appendChild(pseudoElement);
-  });
-
-// document.addEventListener('DOMContentLoaded', function() {
-//     const playBoard = document.querySelector('.play_board');
-  
-//     // Function to create a grid cell and add it to the play_board
-//     function createGridCell() {
-//       const gridCell = document.createElement('div');
-//       gridCell.classList.add('grid-cell');
-//       playBoard.appendChild(gridCell);
-//     }
-  
-//     // Generate the grid cells
-//     const totalCells = 900; // 30x30 grid
-//     for (let i = 0; i < totalCells; i++) {
-//       createGridCell();
-//     }
-  
-//     // Function to color a specific grid cell
-//     function colorGridCell(x, y, color) {
-//       const row = x + 1; // Adding 1 to match 1-based indexing
-//       const column = y + 1; // Adding 1 to match 1-based indexing
-  
-//       const gridCellSelector = `.play_board .grid-cell:nth-child(${row}n + ${column})`;
-//       const gridCell = document.querySelector(gridCellSelector);
-  
-//       if (gridCell) {
-//         gridCell.style.backgroundColor = color;
-//       }
-//     }
-//     // Example usage: Color the grid cell at distance 4 from x-axis and y-axis value 8 with blue
-//   });
-
-
-
 const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
     foodY = generateRandomValueFoodY(foodX);
@@ -85,6 +39,21 @@ const handleGameOver = () => {
     alert("Game Over! Press OK to replay ...");
     location.reload();
 }
+
+const boarder = () => {
+    let htmlboarder = '';
+    for (i=1;i<31;i++) {
+        for(j=1;j<31;j++){
+            if ( ( ((j==1) || (j==30)) && ((i<10) || (i>20)) ) || ( (excludedValuesFoodY.includes(j)) && (excludedValuesFoodX.includes(i)) ) ){
+                htmlboarder += `<div class="boarder horizontal" style="grid-area:${j}/${i}"></div>`;
+            }else if ( ((i==1) || (i==30)) && ((j<10) || (j>20)) ) {
+                htmlboarder += `<div class="boarder vertical" style="grid-area:${j}/${i}"></div>`;
+            } 
+        }
+    }
+    return htmlboarder;
+}
+
 
 const changeDirection = (e) => {
     if (e.key === "ArrowUp" && velocityY!=1 ){
@@ -104,9 +73,12 @@ const changeDirection = (e) => {
 }
 
 const initGame = () => {
-    if (gameOver) return handleGameOver();
-    let htmlMarkup = `<div class="food" style="grid-area:${foodY}/${foodX}"></div>`;
 
+    if (gameOver) return handleGameOver();
+
+    let htmlMarkupboarder = boarder();
+
+    let htmlMarkup = `<div class="food" style="grid-area:${foodY}/${foodX}"></div>`;
     if(caterpillarX===foodX && caterpillarY===foodY) {
         changeFoodPosition();
         caterpillarBody.push([foodX,foodY]);
@@ -120,7 +92,7 @@ const initGame = () => {
         highScorePoint.innerText = `High Score : ${highScore}`;
     }
 
-    for (let i=caterpillarBody.length - 1; i>0 ; i--){
+    for (let i=caterpillarBody.length - 1; i>0 ; i--){    //////////////////////////////////////////////////////////////////////////////
         caterpillarBody[i] = caterpillarBody[i-1];
     }
 
@@ -129,7 +101,7 @@ const initGame = () => {
     caterpillarX += velocityX;
     caterpillarY += velocityY;
 
-    if( caterpillarX<=0 || caterpillarX>30 || caterpillarY<=0 || caterpillarY>30){
+    if( caterpillarX<=0 || caterpillarX>30 || caterpillarY<=0 || caterpillarY>30){   ///////////////////////////////////////////////////
         gameOver = true;
     }
 
@@ -142,10 +114,11 @@ const initGame = () => {
         }
     }
 
-    playBoard.innerHTML = htmlMarkup;
+    playBoard.innerHTML = htmlMarkup + htmlMarkupboarder;
 
 }
 
 changeFoodPosition();
+// boarder();
 setIntervalID = setInterval(initGame, 125);
 document.addEventListener("keydown", changeDirection);
