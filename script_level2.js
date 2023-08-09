@@ -101,7 +101,7 @@ const initGame = () => {
     caterpillarX += velocityX;
     caterpillarY += velocityY;
 
-    if( caterpillarX<=0 || caterpillarX>30 || caterpillarY<=0 || caterpillarY>30){   ///////////////////////////////////////////////////
+    if ( ( ((caterpillarY==1) || (caterpillarY==30)) && ((caterpillarX<10) || (caterpillarX>20)) ) || ( (excludedValuesFoodY.includes(caterpillarY)) && (excludedValuesFoodX.includes(caterpillarX)) ) || ( ((caterpillarX==1) || (caterpillarX==30)) && ((caterpillarY<10) || (caterpillarY>20)) ) ) {  
         gameOver = true;
     }
 

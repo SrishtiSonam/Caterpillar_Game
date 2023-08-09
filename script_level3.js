@@ -83,7 +83,7 @@ const initGame = () => {
         highScorePoint.innerText = `High Score : ${highScore}`;
     }
 
-    for (let i=caterpillarBody.length - 1; i>0 ; i--){    //////////////////////////////////////////////////////////////////////////////
+    for (let i=caterpillarBody.length - 1; i>0 ; i--) {    
         caterpillarBody[i] = caterpillarBody[i-1];
     }
 
@@ -92,7 +92,7 @@ const initGame = () => {
     caterpillarX += velocityX;
     caterpillarY += velocityY;
 
-    if( caterpillarX<=0 || caterpillarX>30 || caterpillarY<=0 || caterpillarY>30){   ///////////////////////////////////////////////////
+    if( (caterpillarY==1) || (caterpillarY==30) || (caterpillarX==1) || (caterpillarX==30) || ( (excludedValuesFoodY.includes(caterpillarY)) && (excludedValuesFoodX.includes(caterpillarX)) ) ) {   
         gameOver = true;
     }
 

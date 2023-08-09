@@ -20,34 +20,14 @@ let excludedValuesFoodY = [1,30];
 
 const generateRandomValueFoodY = (valueX, caterpillarBody) => {
     let valueY;
-    if (excludedValuesFoodX.includes(valueX)) {
-        do {
-            valueY = Math.floor(Math.random() * 30) + 1;
-        } while (excludedValuesFoodY.includes(valueY) || isCaterpillarBodyOverlap(valueX, valueY, caterpillarBody));
-    } else {
-        valueY = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-    }
-    return valueY;
-}
-
-const isCaterpillarBodyOverlap = (valueX, valueY, caterpillarBody) => {
-    for (let i = 0; i < caterpillarBody.length; i++) {
-        const [x, y] = caterpillarBody[i];
-        if (valueX === x && valueY === y) {
-            return true;
-        }
-    }
-    return false;
-}
-
 const changeFoodPosition = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
-    foodY = generateRandomValueFoodY(foodX, caterpillarBody);
+    foodY = Math.floor(Math.random() * 30) + 1;
 }
 
 const handleGameOver = () => {
     clearInterval(setIntervalID);
-    alert("Game Over! Press OK to replay ...");
+    alert("Game Over! Press OK to replay ... ");
     location.reload();
 }
 
