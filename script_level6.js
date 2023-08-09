@@ -14,26 +14,14 @@ let score = 0;
 let highScore = localStorage.getItem("high_score") || 0;
 highScorePoint.innerText = `High Score : ${highScore}`;
 
-var excludedValuesFoodX = [...Array(14).keys()].map(i => i + 9);
-var excludedValuesFoodY = [12,18];
-
-const generateRandomValueFoodY = (valueX) => {
-    var valueY;
-    if(excludedValuesFoodX.includes(valueX)){
-        do {
-            valueY = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-        } while (excludedValuesFoodY.includes(valueY));
-    }else{
-        valueY = Math.floor(Math.random() * 30) + 1;
-    }
-    return valueY;
-}
+var excludedValuesFoodY = [10,20];
+var excludedValuesFoodX = [...Array(20).keys()].map(i => i + 6);
 
 const changeFoodPosition = () => {
     do{
         foodX = Math.floor(Math.random() * 30) + 1;
         foodY = Math.floor(Math.random() * 30) + 1;
-    }while(( ( ((foodY==1) || (foodY==30)) && ((foodX<10) || (foodX>20)) ) || ( (excludedValuesFoodY.includes(foodY)) && (excludedValuesFoodX.includes(foodX)) ) || ( ((foodX==1) || (foodX==30)) && ((foodY<10) || (foodY>20)) ) ))
+    }while( (foodY==1) || (foodY==30) || (foodX==1) || (foodX==30) || ( (excludedValuesFoodY.includes(foodY)) && (excludedValuesFoodX.includes(foodX)) ) )
 }
 
 const handleGameOver = () => {
@@ -46,9 +34,9 @@ const boarder = () => {
     let htmlboarder = '';
     for (i=1;i<31;i++) {
         for(j=1;j<31;j++){
-            if ( ( ((j==1) || (j==30)) && ((i<10) || (i>20)) ) || ( (excludedValuesFoodY.includes(j)) && (excludedValuesFoodX.includes(i)) ) ){
+            if ( (j==1) || (j==30) ){
                 htmlboarder += `<div class="boarder horizontal" style="grid-area:${j}/${i}"></div>`;
-            }else if ( ((i==1) || (i==30)) && ((j<10) || (j>20)) ) {
+            }else if ( ((i==1) || (i==30)) || ( (excludedValuesFoodX.includes(j)) && (excludedValuesFoodY.includes(i)) ) ) {
                 htmlboarder += `<div class="boarder vertical" style="grid-area:${j}/${i}"></div>`;
             } 
         }
@@ -94,7 +82,7 @@ const initGame = () => {
         highScorePoint.innerText = `High Score : ${highScore}`;
     }
 
-    for (let i=caterpillarBody.length - 1; i>0 ; i--){    //////////////////////////////////////////////////////////////////////////////
+    for (let i=caterpillarBody.length - 1; i>0 ; i--) {    
         caterpillarBody[i] = caterpillarBody[i-1];
     }
 
@@ -103,7 +91,7 @@ const initGame = () => {
     caterpillarX += velocityX;
     caterpillarY += velocityY;
 
-    if ( ( ((caterpillarY==1) || (caterpillarY==30)) && ((caterpillarX<10) || (caterpillarX>20)) ) || ( (excludedValuesFoodY.includes(caterpillarY)) && (excludedValuesFoodX.includes(caterpillarX)) ) || ( ((caterpillarX==1) || (caterpillarX==30)) && ((caterpillarY<10) || (caterpillarY>20)) ) ) {  
+    if( (caterpillarY==1) || (caterpillarY==30) || (caterpillarX==1) || (caterpillarX==30) || ( (excludedValuesFoodY.includes(caterpillarY)) && (excludedValuesFoodX.includes(caterpillarX)) ) ) {   
         gameOver = true;
     }
 
@@ -121,6 +109,5 @@ const initGame = () => {
 }
 
 changeFoodPosition();
-// boarder();
 setIntervalID = setInterval(initGame, 125);
 document.addEventListener("keydown", changeDirection);

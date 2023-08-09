@@ -18,11 +18,11 @@ highScorePoint.innerText = `High Score : ${highScore}`;
 let excludedValuesFoodX = [1,30];
 let excludedValuesFoodY = [1,30];
 
-const generateRandomValueFoodY = (valueX, caterpillarBody) => {
-    let valueY;
 const changeFoodPosition = () => {
-    foodX = Math.floor(Math.random() * 30) + 1;
-    foodY = Math.floor(Math.random() * 30) + 1;
+    do{
+        foodX = Math.floor(Math.random() * 30) + 1;
+        foodY = Math.floor(Math.random() * 30) + 1;
+    }while(excludedValuesFoodX.includes(foodX) || excludedValuesFoodY.includes(foodY))
 }
 
 const handleGameOver = () => {

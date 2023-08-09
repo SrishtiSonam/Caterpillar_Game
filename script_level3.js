@@ -14,15 +14,14 @@ let score = 0;
 let highScore = localStorage.getItem("high_score") || 0;
 highScorePoint.innerText = `High Score : ${highScore}`;
 
-var excludedValuesFoodX = [1,12,18,30];
-var excludedValuesFoodY = [1,9,10,11,12,13,14,15,16,17,18,19,20,21,22,30];
+var excludedValuesFoodX = [12,18];
+var excludedValuesFoodY = [...Array(14).keys()].map(i => i + 9);
 
 const changeFoodPosition = () => {
-    foodX = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-    foodY = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
-    if (excludedValuesFoodX.includes(foodX) && excludedValuesFoodY.includes(foodY)){
-        changeFoodPosition()
-    }
+    do{
+        foodX = Math.floor(Math.random() * 30) + 1;
+        foodY = Math.floor(Math.random() * 30) + 1;
+    }while( (foodY==1) || (foodY==30) || (foodX==1) || (foodX==30) || ( (excludedValuesFoodY.includes(foodY)) && (excludedValuesFoodX.includes(foodX)) ) )
 }
 
 const handleGameOver = () => {
