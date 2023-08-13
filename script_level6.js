@@ -14,8 +14,8 @@ let score = 0;
 let highScore = localStorage.getItem("high_score") || 0;
 highScorePoint.innerText = `High Score : ${highScore}`;
 
-var excludedValuesFoodY = [10,20];
-var excludedValuesFoodX = [...Array(20).keys()].map(i => i + 6);
+var excludedValuesFoodX = [10,20];
+var excludedValuesFoodY = [...Array(23).keys()].map(i => i + 4).filter(value => value !== 11 && value !== 19);
 
 const changeFoodPosition = () => {
     do{
@@ -36,7 +36,7 @@ const boarder = () => {
         for(j=1;j<31;j++){
             if ( (j==1) || (j==30) ){
                 htmlboarder += `<div class="boarder horizontal" style="grid-area:${j}/${i}"></div>`;
-            }else if ( ((i==1) || (i==30)) || ( (excludedValuesFoodX.includes(j)) && (excludedValuesFoodY.includes(i)) ) ) {
+            }else if ( ((i==1) || (i==30)) || ( (excludedValuesFoodX.includes(i)) && (excludedValuesFoodY.includes(j)) ) ) {
                 htmlboarder += `<div class="boarder vertical" style="grid-area:${j}/${i}"></div>`;
             } 
         }
